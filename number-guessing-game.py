@@ -3,10 +3,21 @@ from colorama import Fore, Style, Back
     
 def get_name(): 
     user_name = input("Hey, what is your name? ")
-    return user_name
+    return user_name.capitalize()  # this capitalises the first letter only
 
-def greet_user(NAME):
-    print(f"Hello {Fore.GREEN}{NAME}{Style.RESET_ALL}, welcome to my guessing game!")
+def generate_computer_name():
+    letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    new_name = ""
+    for _ in range(0, 6):  # _ is used when we don't need to use that variable but we need the loop to run x times, it's python convention for "idc about this variable"
+        computer_name = letters[random.randint(0, 25)]
+        new_name = new_name + computer_name
+    return new_name.capitalize()
+
+def greet_user(NAME, computer_name):
+    formatted_username = f"{Fore.GREEN}{NAME}"
+    formatted_computername = f"{Fore.BLUE}{computer_name}"  # makes code cleaner 
+    reset_colour = Style.RESET_ALL
+    print(f"Hello {formatted_username}{reset_colour}, I'm {formatted_computername}{reset_colour}, welcome to my guessing game!")
     
 def guess_number():
     game_rules = "Please enter a number between 1 and 15: " # this variable will create less repition. if we wanna modify the rules, now we only have to change 1 string not 2
@@ -35,7 +46,8 @@ def print_outcome(user_number_guess, computer_number):
 def run_game():
     match_counter = 1
     NAME = get_name()
-    greet_user(NAME)
+    computer_name = generate_computer_name()
+    greet_user(NAME, computer_name)
     while True:
         print(f"Match: {match_counter}")
         user_number_guess = guess_number()
