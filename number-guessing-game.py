@@ -18,6 +18,7 @@ def greet_user(NAME, computer_name):
     formatted_computername = f"{Fore.BLUE}{computer_name}"  # makes code cleaner 
     reset_colour = Style.RESET_ALL
     print(f"Hello {formatted_username}{reset_colour}, I'm {formatted_computername}{reset_colour}, welcome to my guessing game!")
+     
     
 def guess_number():
     game_rules = "Please enter a number between 1 and 15: " # this variable will create less repition. if we wanna modify the rules, now we only have to change 1 string not 2
@@ -48,11 +49,23 @@ def run_game():
     NAME = get_name()
     computer_name = generate_computer_name()
     greet_user(NAME, computer_name)
-    while True:
-        print(f"Match: {match_counter}")
-        user_number_guess = guess_number()
-        computer_number = choose_number()
-        display_numbers(user_number_guess, computer_number)
-        print_outcome(user_number_guess, computer_number)
-        match_counter += 1
+    infinite_rounds = input("Would you like to play infinitely? ") 
+    if infinite_rounds == "Yes" or infinite_rounds == "yes":
+        while True:
+            print(f"Match: {match_counter}")
+            user_number_guess = guess_number()
+            computer_number = choose_number()
+            display_numbers(user_number_guess, computer_number)
+            print_outcome(user_number_guess, computer_number)
+            match_counter += 1
+    else:
+        ask_how_many_matches = int(input("How many matches would you like to play? "))
+        for _ in range(ask_how_many_matches):
+            print(f"Match: {match_counter}")
+            user_number_guess = guess_number()
+            computer_number = choose_number()
+            display_numbers(user_number_guess, computer_number)
+            print_outcome(user_number_guess, computer_number)
+            match_counter += 1
+    print("Thank you for playing!😊")
 run_game()
