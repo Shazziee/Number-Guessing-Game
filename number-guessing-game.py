@@ -1,24 +1,34 @@
 import random
 from colorama import Fore, Style, Back
+CONSONANTS = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"]
+VOWELS = ["a", "e", "i", "o", "u"]  # good practice to put constants at the top
+NUMBER_OF_CONSONANT_VOWEL_PAIRS = 3  
     
 def get_name(): 
     user_name = input("Hey, what is your name? ")
     return user_name.capitalize()  # this capitalises the first letter only
 
-def generate_computer_name():
-    letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+def generate_computer_name():  # docstrings are more specified comments, and can only be written under functions. 
+    '''
+
+    The for loop iterates over our chosen number of digits, creating 3 pairs of each (vowels and consonants). 
+    Lists are indexxed into a randomiser, generating random letters. Then, both characters are joined and the accumulator is updated with them. 
+    This is so that the name appears more natural as it's composed of vowel-consonant pairs.
+
+    '''
     new_name = ""
-    for _ in range(0, 6):  # _ is used when we don't need to use that variable but we need the loop to run x times, it's python convention for "idc about this variable"
-        computer_name = letters[random.randint(0, 25)]
-        new_name = new_name + computer_name
-    return new_name.capitalize()
+    for _ in range (0, NUMBER_OF_CONSONANT_VOWEL_PAIRS):   # it will iterate twice, 3 rounds each, so we get a 6 letter name
+        random_consonant = CONSONANTS[random.randint(0, len(CONSONANTS) - 1)]   # to make name look more realistic 
+        random_vowel = VOWELS[random.randint(0, len(VOWELS) - 1)]
+        constant_vowel_pair = random_consonant + random_vowel
+        new_name += constant_vowel_pair
+    return new_name.capitalize()  # capitalises the first letter of a word
 
 def greet_user(NAME, computer_name):
     formatted_username = f"{Fore.GREEN}{NAME}"
     formatted_computername = f"{Fore.BLUE}{computer_name}"  # makes code cleaner 
     reset_colour = Style.RESET_ALL
     print(f"Hello {formatted_username}{reset_colour}, I'm {formatted_computername}{reset_colour}, welcome to my guessing game!")
-     
     
 def guess_number():
     game_rules = "Please enter a number between 1 and 15: " # this variable will create less repition. if we wanna modify the rules, now we only have to change 1 string not 2
@@ -47,8 +57,8 @@ def print_outcome(user_number_guess, computer_number):
 def run_game():
     match_counter = 1
     NAME = get_name()
-    computer_name = generate_computer_name()
-    greet_user(NAME, computer_name)
+    COMPUTER_NAME = generate_computer_name()
+    greet_user(NAME, COMPUTER_NAME)
     infinite_rounds = input("Would you like to play infinitely? ") 
     if infinite_rounds == "Yes" or infinite_rounds == "yes":
         while True:
@@ -68,4 +78,5 @@ def run_game():
             print_outcome(user_number_guess, computer_number)
             match_counter += 1
     print("Thank you for playing!😊")
+
 run_game()
